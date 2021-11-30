@@ -192,7 +192,7 @@ class LogTable extends WP_List_Table {
       case "date":
         $return = sprintf(
           "<strong>" . __("%s ago", "aryo-activity-log") . "</strong>",
-          human_time_diff($item->hist_time, current_time("timestamp")),
+          human_time_diff($item->hist_time, current_time("timestamp"))
         );
 
         $date_formatted = date("d/m/Y", $item->hist_time);
@@ -225,7 +225,7 @@ class LogTable extends WP_List_Table {
       "aal_table_list_column_default",
       $return,
       $item,
-      $column_name,
+      $column_name
     );
 
     return $return;
@@ -245,13 +245,13 @@ class LogTable extends WP_List_Table {
           isset($user->roles[0]) &&
           isset($wp_roles->role_names[$user->roles[0]])
             ? $wp_roles->role_names[$user->roles[0]]
-            : __("Unknown", "aryo-activity-log"),
+            : __("Unknown", "aryo-activity-log")
         );
       }
     }
     return sprintf(
       '<span class="aal-author-name">%s</span>',
-      __("N/A", "aryo-activity-log"),
+      __("N/A", "aryo-activity-log")
     );
   }
 
@@ -289,12 +289,12 @@ class LogTable extends WP_List_Table {
           "view" => sprintf(
             '<a href="%s">%s</a>',
             get_permalink($item->object_id),
-            __("View", "aryo-activity-log"),
+            __("View", "aryo-activity-log")
           ),
           "edit" => sprintf(
             '<a href="%s">%s</a>',
             get_edit_post_link($item->object_id),
-            __("Edit", "aryo-activity-log"),
+            __("Edit", "aryo-activity-log")
           ),
         ];
 
@@ -307,27 +307,27 @@ class LogTable extends WP_List_Table {
           if (is_taxonomy_viewable($item->object_subtype)) {
             $term_view_link = get_term_link(
               absint($item->object_id),
-              $item->object_subtype,
+              $item->object_subtype
             );
 
             if (!is_wp_error($term_view_link)) {
               $actions["view"] = sprintf(
                 '<a href="%s">%s</a>',
                 $term_view_link,
-                __("View", "aryo-activity-log"),
+                __("View", "aryo-activity-log")
               );
             }
           }
 
           $term_edit_link = get_edit_term_link(
             $item->object_id,
-            $item->object_subtype,
+            $item->object_subtype
           );
           if (!empty($term_edit_link)) {
             $actions["edit"] = sprintf(
               '<a href="%s">%s</a>',
               $term_edit_link,
-              __("Edit", "aryo-activity-log"),
+              __("Edit", "aryo-activity-log")
             );
           }
 
@@ -343,7 +343,7 @@ class LogTable extends WP_List_Table {
           $actions["edit"] = sprintf(
             '<a href="%s">%s</a>',
             get_edit_comment_link($item->object_id),
-            __("Edit", "aryo-activity-log"),
+            __("Edit", "aryo-activity-log")
           );
         }
 
@@ -357,7 +357,7 @@ class LogTable extends WP_List_Table {
           $actions["edit"] = sprintf(
             '<a href="%s">%s</a>',
             $user_edit_link,
-            __("Edit", "aryo-activity-log"),
+            __("Edit", "aryo-activity-log")
           );
         }
 
@@ -385,7 +385,7 @@ class LogTable extends WP_List_Table {
     $return = apply_filters(
       "aal_table_list_column_description",
       $return,
-      $item,
+      $item
     );
 
     if (!empty($actions)) {
@@ -428,11 +428,11 @@ class LogTable extends WP_List_Table {
 				<select name="aal-record-action">
 					<option value=""><?php echo esc_attr__(
        "Export File Format",
-       "aryo-activity-log",
+       "aryo-activity-log"
      ); ?></option>
 					<?php foreach ($actions as $action_key => $action_title): ?>
 					<option value="<?php echo esc_attr($action_key); ?>"><?php echo esc_html(
-  $action_title,
+  $action_title
 ); ?></option>
 					<?php endforeach; ?>
 				</select>
@@ -442,21 +442,22 @@ class LogTable extends WP_List_Table {
      $action_key = key($actions);
      ?>
 			<input type="hidden" name="aal-record-action" value="<?php echo esc_attr(
-     $action_key,
+     $action_key
    ); ?>">
 			<?php endif; ?>
 
 			<button type="submit" name="aal-record-actions-submit" id="record-actions-submit" class="button button-primary" value="1">
 				<?php // Is result filtering enabled?
-    if (array_key_exists("aal-filter", $_GET)) {
+    // Is result filtering enabled?
+    ?>if (array_key_exists("aal-filter", $_GET)) {
       echo sprintf(
         esc_html__("Export filtered records as %s", "aryo-activity-log"),
-        $action_title,
+        $action_title
       );
     } else {
       echo sprintf(
         esc_html__("Export as %s", "aryo-activity-log"),
-        $action_title,
+        $action_title
       );
     } ?>
 			</button>
@@ -489,7 +490,7 @@ class LogTable extends WP_List_Table {
 				GROUP BY `user_id`
 				ORDER BY `user_id`
 				LIMIT 100
-			;',
+			;'
     );
 
     $types = $wpdb->get_results(
@@ -502,7 +503,7 @@ class LogTable extends WP_List_Table {
         '
 				GROUP BY `object_type`
 				ORDER BY `object_type`
-			;',
+			;'
     );
 
     // Make sure we get items for filter.
@@ -524,7 +525,7 @@ class LogTable extends WP_List_Table {
           '<option value="%s"%s>%s</option>',
           $key,
           selected($_REQUEST["dateshow"], $key, false),
-          $value,
+          $value
         );
       }
       echo "</select>";
@@ -534,7 +535,7 @@ class LogTable extends WP_List_Table {
         "button",
         "aal-filter",
         false,
-        ["id" => "activity-query-submit"],
+        ["id" => "activity-query-submit"]
       );
     }
 
@@ -552,14 +553,14 @@ class LogTable extends WP_List_Table {
         echo '<select name="capshow" id="hs-filter-capshow">';
         printf(
           '<option value="">%s</option>',
-          __("All Roles", "aryo-activity-log"),
+          __("All Roles", "aryo-activity-log")
         );
         foreach ($output as $key => $value) {
           printf(
             '<option value="%s"%s>%s</option>',
             $key,
             selected($_REQUEST["capshow"], $key, false),
-            $value,
+            $value
           );
         }
         echo "</select>";
@@ -586,14 +587,14 @@ class LogTable extends WP_List_Table {
         echo '<select name="usershow" id="hs-filter-usershow">';
         printf(
           '<option value="">%s</option>',
-          __("All Users", "aryo-activity-log"),
+          __("All Users", "aryo-activity-log")
         );
         foreach ($output as $key => $value) {
           printf(
             '<option value="%s"%s>%s</option>',
             $key,
             selected($_REQUEST["usershow"], $key, false),
-            $value,
+            $value
           );
         }
         echo "</select>";
@@ -611,14 +612,14 @@ class LogTable extends WP_List_Table {
           '<option value="%s"%s>%s</option>',
           $type->object_type,
           selected($_REQUEST["typeshow"], $type->object_type, false),
-          __($type->object_type, "aryo-activity-log"),
+          __($type->object_type, "aryo-activity-log")
         );
       }
 
       echo '<select name="typeshow" id="hs-filter-typeshow">';
       printf(
         '<option value="">%s</option>',
-        __("All Topics", "aryo-activity-log"),
+        __("All Topics", "aryo-activity-log")
       );
       echo implode("", $output);
       echo "</select>";
@@ -634,7 +635,7 @@ class LogTable extends WP_List_Table {
         '
 				GROUP BY `action`
 				ORDER BY `action`
-			;',
+			;'
     );
 
     if ($actions) {
@@ -648,14 +649,14 @@ class LogTable extends WP_List_Table {
           '<option value="%s"%s>%s</option>',
           $action->action,
           selected($_REQUEST["showaction"], $action->action, false),
-          $this->get_action_label($action->action),
+          $this->get_action_label($action->action)
         );
       }
 
       echo '<select name="showaction" id="hs-filter-showaction">';
       printf(
         '<option value="">%s</option>',
-        __("All Actions", "aryo-activity-log"),
+        __("All Actions", "aryo-activity-log")
       );
       echo implode("", $output);
       echo "</select>";
@@ -704,7 +705,7 @@ class LogTable extends WP_List_Table {
     if (!empty($_REQUEST["typeshow"])) {
       $where .= $wpdb->prepare(
         " AND `object_type` = %s",
-        $_REQUEST["typeshow"],
+        $_REQUEST["typeshow"]
       );
     }
 
@@ -723,7 +724,7 @@ class LogTable extends WP_List_Table {
     if (isset($_REQUEST["capshow"]) && "" !== $_REQUEST["capshow"]) {
       $where .= $wpdb->prepare(
         " AND `user_caps` = %s",
-        strtolower($_REQUEST["capshow"]),
+        strtolower($_REQUEST["capshow"])
       );
     }
 
@@ -740,7 +741,7 @@ class LogTable extends WP_List_Table {
           0,
           date("m", $current_time),
           date("d", $current_time),
-          date("Y", $current_time),
+          date("Y", $current_time)
         );
         $end_time = mktime(
           23,
@@ -748,7 +749,7 @@ class LogTable extends WP_List_Table {
           59,
           date("m", $current_time),
           date("d", $current_time),
-          date("Y", $current_time),
+          date("Y", $current_time)
         );
 
         if ("yesterday" === $_REQUEST["dateshow"]) {
@@ -759,7 +760,7 @@ class LogTable extends WP_List_Table {
             59,
             date("m", $start_time),
             date("d", $start_time),
-            date("Y", $start_time),
+            date("Y", $start_time)
           );
         } elseif ("week" === $_REQUEST["dateshow"]) {
           $start_time = strtotime("-1 week", $start_time);
@@ -776,7 +777,7 @@ class LogTable extends WP_List_Table {
             0,
             (int) $date_array[1],
             (int) $date_array[0],
-            (int) $date_array[2],
+            (int) $date_array[2]
           );
           $end_time = mktime(
             23,
@@ -784,7 +785,7 @@ class LogTable extends WP_List_Table {
             59,
             (int) $date_array[1],
             (int) $date_array[0],
-            (int) $date_array[2],
+            (int) $date_array[2]
           );
         }
       }
@@ -793,7 +794,7 @@ class LogTable extends WP_List_Table {
         $where .= $wpdb->prepare(
           " AND `hist_time` > %d AND `hist_time` < %d",
           $start_time,
-          $end_time,
+          $end_time
         );
       }
     }
@@ -802,7 +803,7 @@ class LogTable extends WP_List_Table {
       // Search only searches 'description' fields.
       $where .= $wpdb->prepare(
         " AND `object_name` LIKE %s",
-        "%" . $wpdb->esc_like($_REQUEST["s"]) . "%",
+        "%" . $wpdb->esc_like($_REQUEST["s"]) . "%"
       );
     }
 
@@ -816,11 +817,11 @@ class LogTable extends WP_List_Table {
         $where .
         '
 					' .
-        $this->_get_where_by_role(),
+        $this->_get_where_by_role()
     );
 
     $items_orderby = sanitize_sql_orderby(
-      filter_input(INPUT_GET, "orderby", FILTER_SANITIZE_STRING),
+      filter_input(INPUT_GET, "orderby", FILTER_SANITIZE_STRING)
     );
     if (empty($items_orderby)) {
       $items_orderby = "hist_time"; // Sort by time by default.
@@ -849,8 +850,8 @@ class LogTable extends WP_List_Table {
           '
 					LIMIT %d, %d;',
         $offset,
-        $items_per_page,
-      ),
+        $items_per_page
+      )
     );
 
     $this->set_pagination_args([
