@@ -1,0 +1,11 @@
+<div class="wrap">
+  <h1 class="wp-heading-inline">{{ __("Lumber logs", "lumber") }}</h1>
+  <ul>
+    {% for item in items %}
+      <li>
+        {{ item.time }}
+        <pre><code>{{- item.message -}}</code></pre>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

@@ -1,0 +1,31 @@
+{
+  "name": "whitespace-se/wordpress-plugin-lumber",
+  "description": "Allows you to log to the database",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "WPLumber\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Whitespace",
+      "email": "code@whitespace.se"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    }
+  ],
+  "extra": {
+    "installer-name": "lumber"
+  },
+  "require": {
+    "timber/timber": "^1.19"
+  }
+}
