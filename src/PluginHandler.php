@@ -11,6 +11,7 @@ class PluginHandler {
 
   private $handlers;
   private $db;
+  private $timber;
 
   public function __construct() {
     add_action("admin_menu", [$this, "onAdminMenu"]);
@@ -42,10 +43,6 @@ class PluginHandler {
   }
 
   public function render($files, ...$args) {
-    $files = (array) $files;
-    $files = array_map(function ($file) {
-      return WP_LUMBER_PATH . "/templates/" . $file;
-    }, $files);
     return $this->timber->render($files, ...$args);
   }
 
