@@ -2,7 +2,7 @@
   "name": "whitespace-se/wordpress-plugin-lumber",
   "description": "Allows you to log to the database",
   "type": "wordpress-plugin",
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "autoload": {
     "psr-4": {
       "WPLumber\\": "src/"
