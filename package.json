@@ -1,4 +1,5 @@
 {
+  "license": "AGPL",
   "scripts": {
     "format": "prettier --write '**/*.{js,json,md,yml,php,module,theme,install,inc}'"
   },
